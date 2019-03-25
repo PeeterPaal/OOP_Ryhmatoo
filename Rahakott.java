@@ -1,20 +1,43 @@
 package Ryhmatoo;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rahakott {
-    private long privaatneVõti;
-    private long avalikVõti;
+    private int tunnusNumber;
+    private String omanikuNimi;
+    private String valuutaNimi;
+    private double valuutaKogus;
 
     //getterid
-    public long getPrivaatneVõti() { return privaatneVõti; }
-    public long getAvalikVõti() { return avalikVõti; }
+    public int getTunnusNumber() { return tunnusNumber; }
+    public double getValuutaKogus() { return valuutaKogus; }
+    public String getOmanikuNimi() { return omanikuNimi; }
+    public String getValuutaNimi() { return valuutaNimi; }
 
     //setterid
-    public void setPrivaatneVõti(long privaatneVõti) { this.privaatneVõti = privaatneVõti; }
-    public void setAvalikVõti(long avalikVõti) { this.avalikVõti = avalikVõti; }
+    public void setValuutaNimi(String valuutaNimi) { this.valuutaNimi = valuutaNimi; }
+    public void setValuutaKogus(double valuutaKogus) { this.valuutaKogus = valuutaKogus; }
+    public void setOmanikuNimi(String omanikuNimi) { this.omanikuNimi = omanikuNimi; }
+    public void setTunnusNumber(int tunnusNumber) { this.tunnusNumber = tunnusNumber; }
 
     //konstruktor
-    public Rahakott(long privaatneVõti, long avalikVõti) {
-        this.privaatneVõti = privaatneVõti;
-        this.avalikVõti = avalikVõti;
+    public Rahakott(int tunnusNumber, String omanikuNimi, String valuutaNimi, double valuutaKogus) {
+        this.tunnusNumber = tunnusNumber;
+        this.omanikuNimi = omanikuNimi;
+        this.valuutaNimi = valuutaNimi;
+        this.valuutaKogus = valuutaKogus;
+    }
+
+    //toString
+    @Override
+    public String toString() {
+        return "Rahakott{" +
+                "tunnusNumber=" + tunnusNumber +
+                ", omanikuNimi='" + omanikuNimi + '\'' +
+                ", valuutaNimi='" + valuutaNimi + '\'' +
+                ", valuutaKogus=" + valuutaKogus +
+                '}';
     }
 }
