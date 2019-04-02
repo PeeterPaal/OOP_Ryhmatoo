@@ -1,61 +1,103 @@
 package Ryhmatoo;
+
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-
+import java.io.File;
 
 
 public class testKlass {
     public static void main(String[] args) throws Exception {
         List<Rahakott> rahakotid = new ArrayList<>();
-        java.io.File andmebaas = new java.io.File("rahakotid.txt");
+        File andmebaas = new File("rahakotid.txt");
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("lisa/näita: ");
-        String s = scan.nextLine();
+        if (andmebaas.exists()) {
+            try (Scanner sc = new Scanner(andmebaas)) {
+                while (sc.hasNextLine()) {
+                    String rida = sc.nextLine();
+                    String[] tykid = rida.split(" ");
+                    rahakotid.add(new Rahakott(Integer.parseInt(tykid[0]),
+                            tykid[1].substring(0, 1).toUpperCase() + tykid[1].substring(1),
+                            tykid[2].toUpperCase(), Double.parseDouble(tykid[3]),
+                            tykid[4]));
+                }
+            }
+        }
 
-        if (s != "peata") {
-            if (s == "näita") {
-                if (andmebaas.exists()) {
-                    System.out.println("Andmebaas eksisteerib, loen...");
-                    try (java.util.Scanner sc = new java.util.Scanner(andmebaas, "UTF-8")) {
-                        while (sc.hasNextLine()) {
-                            String rida = sc.nextLine();
-                            String tükid[] = rida.split(" ");
-                            Rahakott rahakott = new Rahakott(Integer.parseInt(tükid[0]), tükid[1], tükid[2], Double.parseDouble(tükid[3]));
-                            rahakotid.add(rahakott);
-                            System.out.println(rahakott);
-                        }
-                    }
-                } else {
-                    System.out.println("Andmebaasi ei eksisteeri.");
-                    java.lang.System.exit(0);
+        else {
+            System.out.println("Andmebaasi ei eksisteeri.");
+            java.lang.System.exit(0);
+        }
+
+
+        System.out.print("Lisa / näita / kustuta: ");
+        String s = scan.nextLine().toLowerCase();
+
+
+        if (!s.equals("peata")) {
+            if (s.equals("näita")) {
+                for (Rahakott rahakott : rahakotid) {
+                    System.out.println(rahakott.toString());
                 }
-            } else if (s == "lisa") {
-                FileWriter kirjutaja = new FileWriter(andmebaas, true);
-                try (java.util.Scanner sc = new java.util.Scanner(andmebaas, "UTF-8")) {
-                    while (sc.hasNextLine()) {
-                        String rida = sc.nextLine();
-                        String tükid[] = rida.split(" ");
-                        Rahakott rahakott = new Rahakott(Integer.parseInt(tükid[0]), tükid[1], tükid[2], Double.parseDouble(tükid[3]));
-                        kirjutaja.write(Integer.toString(rahakott.getTunnusNumber()) + " " +
-                                rahakott.getOmanikuNimi() + " " +
-                                rahakott.getValuutaNimi() + " " +
-                                Double.toString(rahakott.getValuutaKogus()));
-                        kirjutaja.flush();
-                    }
-                }
-                Scanner lisamine = new Scanner(System.in);
-                System.out.println("sisestage tunnusnumber, omanikunimi, valuutanimi ja valuutakogus: ");
-                String lisa = scan.nextLine();
-                String lisaSplititud[] = lisa.split(" ");
-                kirjutaja.write(lisaSplititud[0] + " " + lisaSplititud[1] + " " + lisaSplititud[2] + " " + lisaSplititud[3]);
+            }
+
+            else if (s.equals("lisa")) {
+                FileWriter kirjutaja = new FileWriter(andmebaas);
+
+                FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
+
+                System.out.print("Sisestage tunnusnumber: ");
+                String tunnusNumber = scan.nextLine();
+
+                System.out.print("Sisestage omaniku nimi: ");
+                String omanikuNimi = scan.nextLine();
+
+                System.out.print("Sisestage valuuta nimi: ");
+                String valuutaNimi = scan.nextLine();
+
+                System.out.print("Sisestage valuuta kogus: ");
+                String valuutaKogus = scan.nextLine();
+
+                kirjutaja.write(tunnusNumber + " " + omanikuNimi.substring(0, 1).toUpperCase() + omanikuNimi.substring(1) + " " + valuutaNimi.toUpperCase() + " " + valuutaKogus + " " + KoodiGeneraator.generaator());
                 kirjutaja.flush();
                 kirjutaja.close();
             }
-        } else {
-            java.lang.System.exit(0);
+
+            else if (s.equals("kustuta")) {
+                boolean eemalda = false;
+                System.out.println("Sisestage rahakoti tunnuskood: ");
+                String kood = scan.nextLine();
+                for (Iterator<Rahakott> i = rahakotid.listIterator(); i.hasNext();) {
+                    Rahakott rahakott = i.next();
+                    if (Integer.toString(rahakott.getTunnusNumber()).equals(kood)) {
+                        System.out.println("Olete kindel, et soovite rahakoti tunnusnumbriga " + kood + " kustutada? (Y/N)");
+                        String yesOrNo = scan.nextLine().toUpperCase();
+                        if (yesOrNo.equals("Y")) {
+                            eemalda = true;
+                        }
+                    }
+                }
+
+                if (!eemalda)
+                    System.out.println("Sellise tunnuskoodiga rahakotti ei leitud.");
+
+                if (eemalda) {
+                    for (Rahakott rahakott : rahakotid) {
+                        if (Integer.toString(rahakott.getTunnusNumber()).equals(kood)) {
+                            rahakotid.remove(rahakott);
+                            break;
+                        }
+                    }
+                }
+
+                FileWriter kirjutaja = new FileWriter(andmebaas);
+                FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
+
+            }
         }
     }
 }
+
