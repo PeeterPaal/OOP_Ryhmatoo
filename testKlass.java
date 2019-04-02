@@ -25,77 +25,75 @@ public class testKlass {
                             tykid[4]));
                 }
             }
-        }
-
-        else {
+        } else {
             System.out.println("Andmebaasi ei eksisteeri.");
             java.lang.System.exit(0);
         }
 
 
-        System.out.print("Lisa / näita / kustuta: ");
-        String s = scan.nextLine().toLowerCase();
-
-
-        if (!s.equals("peata")) {
-            if (s.equals("näita")) {
-                for (Rahakott rahakott : rahakotid) {
-                    System.out.println(rahakott.toString());
-                }
-            }
-
-            else if (s.equals("lisa")) {
-                FileWriter kirjutaja = new FileWriter(andmebaas);
-
-                FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
-
-                System.out.print("Sisestage tunnusnumber: ");
-                String tunnusNumber = scan.nextLine();
-
-                System.out.print("Sisestage omaniku nimi: ");
-                String omanikuNimi = scan.nextLine();
-
-                System.out.print("Sisestage valuuta nimi: ");
-                String valuutaNimi = scan.nextLine();
-
-                System.out.print("Sisestage valuuta kogus: ");
-                String valuutaKogus = scan.nextLine();
-
-                kirjutaja.write(tunnusNumber + " " + omanikuNimi.substring(0, 1).toUpperCase() + omanikuNimi.substring(1) + " " + valuutaNimi.toUpperCase() + " " + valuutaKogus + " " + KoodiGeneraator.generaator());
-                kirjutaja.flush();
-                kirjutaja.close();
-            }
-
-            else if (s.equals("kustuta")) {
-                boolean eemalda = false;
-                System.out.println("Sisestage rahakoti tunnuskood: ");
-                String kood = scan.nextLine();
-                for (Iterator<Rahakott> i = rahakotid.listIterator(); i.hasNext();) {
-                    Rahakott rahakott = i.next();
-                    if (Integer.toString(rahakott.getTunnusNumber()).equals(kood)) {
-                        System.out.println("Olete kindel, et soovite rahakoti tunnusnumbriga " + kood + " kustutada? (Y/N)");
-                        String yesOrNo = scan.nextLine().toUpperCase();
-                        if (yesOrNo.equals("Y")) {
-                            eemalda = true;
-                        }
-                    }
-                }
-
-                if (!eemalda)
-                    System.out.println("Sellise tunnuskoodiga rahakotti ei leitud.");
-
-                if (eemalda) {
+        while (true) {
+            System.out.print("Lisa / näita / kustuta: ");
+            String s = scan.nextLine().toLowerCase();
+            if (!s.equals("peata")) {
+                if (s.equals("näita")) {
                     for (Rahakott rahakott : rahakotid) {
+                        System.out.println(rahakott.toString());
+                    }
+                } else if (s.equals("lisa")) {
+                    FileWriter kirjutaja = new FileWriter(andmebaas);
+
+                    FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
+
+                    System.out.print("Sisestage tunnusnumber: ");
+                    String tunnusNumber = scan.nextLine();
+
+                    System.out.print("Sisestage omaniku nimi: ");
+                    String omanikuNimi = scan.nextLine();
+
+                    System.out.print("Sisestage valuuta nimi: ");
+                    String valuutaNimi = scan.nextLine();
+
+                    System.out.print("Sisestage valuuta kogus: ");
+                    String valuutaKogus = scan.nextLine();
+
+                    kirjutaja.write(tunnusNumber + " " + omanikuNimi.substring(0, 1).toUpperCase() + omanikuNimi.substring(1) + " " + valuutaNimi.toUpperCase() + " " + valuutaKogus + " " + KoodiGeneraator.generaator());
+                    kirjutaja.flush();
+                    kirjutaja.close();
+                } else if (s.equals("kustuta")) {
+                    boolean eemalda = false;
+                    System.out.println("Sisestage rahakoti tunnuskood: ");
+                    String kood = scan.nextLine();
+                    for (Iterator<Rahakott> i = rahakotid.listIterator(); i.hasNext(); ) {
+                        Rahakott rahakott = i.next();
                         if (Integer.toString(rahakott.getTunnusNumber()).equals(kood)) {
-                            rahakotid.remove(rahakott);
-                            break;
+                            System.out.println("Olete kindel, et soovite rahakoti tunnusnumbriga " + kood + " kustutada? (Y/N)");
+                            String yesOrNo = scan.nextLine().toUpperCase();
+                            if (yesOrNo.equals("Y")) {
+                                eemalda = true;
+                            }
                         }
                     }
+
+                    if (!eemalda)
+                        System.out.println("Sellise tunnuskoodiga rahakotti ei leitud.");
+
+                    if (eemalda) {
+                        for (Rahakott rahakott : rahakotid) {
+                            if (Integer.toString(rahakott.getTunnusNumber()).equals(kood)) {
+                                rahakotid.remove(rahakott);
+                                break;
+                            }
+                        }
+                    }
+
+                    FileWriter kirjutaja = new FileWriter(andmebaas);
+                    FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
+
                 }
-
-                FileWriter kirjutaja = new FileWriter(andmebaas);
-                FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
-
+            }
+            else {
+                System.out.println("Programm suletakse");
+                break;
             }
         }
     }
