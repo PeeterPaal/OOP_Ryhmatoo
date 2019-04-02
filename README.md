@@ -5,8 +5,5 @@ Plaan:
 - neid samu rahakotte sinna lisama;
 - rahakotte sealt kustutama.
 
-Veel teha:
-- Valuuta eurodeks teisendamine
-
 Märkused:
 - fail "rahakotid.txt" peab olema projekti juurkaustas(kus asuvad "out" ja "src" kaustad)
