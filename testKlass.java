@@ -32,7 +32,7 @@ public class testKlass {
 
 
         while (true) {
-            System.out.print("Lisa / näita / kustuta: ");
+            System.out.print("Lisa / näita / kustuta / peata: ");
             String s = scan.nextLine().toLowerCase();
             if (!s.equals("peata")) {
                 if (s.equals("näita")) {
@@ -56,7 +56,10 @@ public class testKlass {
                     System.out.print("Sisestage valuuta kogus: ");
                     String valuutaKogus = scan.nextLine();
 
-                    kirjutaja.write(tunnusNumber + " " + omanikuNimi.substring(0, 1).toUpperCase() + omanikuNimi.substring(1) + " " + valuutaNimi.toUpperCase() + " " + valuutaKogus + " " + KoodiGeneraator.generaator());
+                    String kood = KoodiGeneraator.generaator();
+
+                    kirjutaja.write(tunnusNumber + " " + omanikuNimi.substring(0, 1).toUpperCase() + omanikuNimi.substring(1) + " " + valuutaNimi.toUpperCase() + " " + valuutaKogus + " " + kood);
+                    rahakotid.add(new Rahakott(Integer.parseInt(tunnusNumber), omanikuNimi, valuutaNimi, Double.parseDouble(valuutaKogus), kood));
                     kirjutaja.flush();
                     kirjutaja.close();
                 } else if (s.equals("kustuta")) {
@@ -93,6 +96,7 @@ public class testKlass {
             }
             else {
                 System.out.println("Programm suletakse");
+                java.lang.System.exit(0);
                 break;
             }
         }
