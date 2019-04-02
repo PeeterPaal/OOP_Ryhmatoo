@@ -1,10 +1,6 @@
 package Ryhmatoo;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-public class Rahakott {
+public class Rahakott implements Comparable<Rahakott>{
     private int tunnusNumber;
     private String omanikuNimi;
     private String valuutaNimi;
@@ -56,6 +52,16 @@ public class Rahakott {
         this.valuutaNimi = valuutaNimi;
         this.valuutaKogus = valuutaKogus;
         this.kood = kood;
+    }
+
+    public int compareTo(Rahakott võrreldav) {
+        if (tunnusNumber < võrreldav.tunnusNumber) {
+            return -1;
+        }
+        if (tunnusNumber > võrreldav.tunnusNumber) {
+            return 1;
+        }
+        return 0;
     }
 
     //toString
