@@ -1,15 +1,18 @@
 package Ryhmatoo;
 
+//failist listi tegemise meetod
+
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class failistListi {
+    //meetod failistList vajab andmebaasi faili ja rahakottide lista
     public static void failistList(File andmebaas, List<Rahakott> rahakotid) throws Exception{
-        if (andmebaas.exists()) {
+        if (andmebaas.exists()) {   //kontrollitakse, kas andmebaas on olemas
             try (Scanner sc = new Scanner(andmebaas)) {
-                while (sc.hasNextLine()) {
+                while (sc.hasNextLine()) {  //kui on, käiakse kõik failiread läbi, loetakse see eraldi sõneks, tükeldatakse see ning lisatakse nendest uus rahakott
                     String rida = sc.nextLine();
                     String[] tykid = rida.split(" ");
                     rahakotid.add(new Rahakott(Integer.parseInt(tykid[0]),
@@ -19,8 +22,8 @@ public class failistListi {
                 }
             }
 
-            Collections.sort(rahakotid);
-        } else {
+            Collections.sort(rahakotid);    //rahakotid sorditakse
+        } else {    //kui andmebaasi ei ole olemas, väljastatakse, et seda ei eksisteeri ning töö lõpetatakse
             System.out.println("Andmebaasi ei eksisteeri.");
             System.exit(0);
         }
