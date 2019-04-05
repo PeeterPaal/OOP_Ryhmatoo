@@ -21,6 +21,10 @@ public class Rahakott implements Comparable<Rahakott>{
 
     public String getKood() { return kood; }
 
+    public void setValuutaKogus(double valuutaKogus) {
+        this.valuutaKogus = valuutaKogus;
+    }
+
     //konstruktor, väärtustatakse uus rahakott
     public Rahakott(int tunnusNumber, String omanikuNimi, String valuutaNimi, double valuutaKogus, String kood) {
         this.tunnusNumber = tunnusNumber;

@@ -2,6 +2,7 @@ package Ryhmatoo;
 
 //Testklass
 
+import java.io.FileWriter;
 import java.util.*;
 import java.io.File;
 
@@ -18,7 +19,7 @@ public class testKlass {
         //programm töötab nii kaua, kuniks sisestatakse "peata"
         while (true) {
             //küsitakse valikut
-            System.out.print("Lisa / näita / kustuta / peata / teisenda: ");
+            System.out.print("Lisa / näita / kustuta / peata / teisenda / ülekanne: ");
             //et programm saaks aru, kui kirjutatakse "peata" või "PeaTa", siis teisendatakse saadud sõne väikesteks tähtedeks
             String s = scan.nextLine().toLowerCase();
 
@@ -32,10 +33,14 @@ public class testKlass {
                     tegevusKustuta.kustuta(rahakotid, andmebaas, scan); //kustuta korral kutsutakse välja meetod, mis kustutab andmebaasist ja listist rahakoti
                 } else if (s.equals("teisenda")) {
                     tegevusTeisenda.teisenda(rahakotid, scan); //teisenda korral kutsutakse välja meetod, mis teisendab rahakotis oleva valuuta väärtuse eurodesse
+                } else if (s.equals("ülekanne")) {
+                    tegevusYlekanne.kannaYle(rahakotid, scan);
                 }
+
             }
             else {
                 System.out.println("Programm suletakse");   //kui kirjutatakse "peata", siis väljastatakse, et programm suletakse ning töö lõpetatakse
+                FailiKirjutaja.kirjutaja(rahakotid, new FileWriter(andmebaas));
                 System.exit(0);
                 break;
             }

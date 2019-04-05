@@ -12,7 +12,7 @@ public class Valuuta {
     static double ETH = 140.59;
 
     //meetod valuuta2Eur vajab valuuta nime ning valuuta kogust
-    public static String valuuta2Eur(String valuutaNimi, double valuutaKogus) {
+    public static double valuuta2Eur(String valuutaNimi, double valuutaKogus) {
         double summa = 0;   //väärtustatakse muutuja summa
         if (valuutaNimi.equals("BTC")) {    //uuritakse, mis valuutaga on tegemist ning vastavalt valuuta nimele teisendatakse valuuta eurodesse
             summa = valuutaKogus * BTC;
@@ -20,7 +20,20 @@ public class Valuuta {
         else if (valuutaNimi.equals("ETH")) {
             summa = valuutaKogus * ETH;
         }
+        //System.out.println(valuutaKogus + " " + valuutaNimi + " = " + summa + " EUR");
+        return summa;   //tagastatakse valuuta väärtus eurodes
+    }
 
-        return valuutaKogus + " " + valuutaNimi + " = " + summa + " EUR";   //tagastatakse valuuta väärtus eurodes
+    public static double eur2Valuuta(String valuutaNimi, double valuutaKogus) {
+        double summa = 0;
+        if (valuutaNimi.equals("BTC")) {
+            summa = valuutaKogus / BTC;
+        }
+
+        else if (valuutaNimi.equals("ETH")) {
+            summa = valuutaKogus / ETH;
+        }
+
+        return summa;
     }
 }
