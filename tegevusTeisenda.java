@@ -16,7 +16,7 @@ public class tegevusTeisenda {
             for (Rahakott rahakott : rahakotid) {
                 if (Integer.toString(rahakott.getTunnusNumber()).equals(kood)) {    //kui leidub, siis tehakse teisendus, teisenduse tegemine toimub klassis "Valuuta"
 
-                    teisendus =rahakott.getValuutaKogus() + " " + rahakott.getValuutaNimi() + " = " + Valuuta.valuuta2Eur(rahakott.getValuutaNimi(), rahakott.getValuutaKogus()) + " EUR";
+                    teisendus = rahakott.getValuutaKogus() + " " + rahakott.getValuutaNimi() + " = " + Valuuta.valuuta2Eur(rahakott.getValuutaNimi(), rahakott.getValuutaKogus()) + " EUR";
                     //teisendus = "1";
                     break;  //kui teisendus tehtud, katkestatakse tsükkel
                 }

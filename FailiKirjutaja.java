@@ -19,4 +19,21 @@ public class FailiKirjutaja {
             kirjutaja.flush();
         }
     }
+
+    public static void kirjutaja2(List<Rahakott> rahakotid) {
+        try (FileWriter kirjutaja = new FileWriter("rahakotid.txt")) {
+            for (Rahakott rahakott : rahakotid) {
+                kirjutaja.write(rahakott.getTunnusNumber() + " " +
+                        rahakott.getOmanikuNimi() + " " +
+                        rahakott.getValuutaNimi() + " " +
+                        rahakott.getValuutaKogus() + " " +
+                        rahakott.getKood() + "\r\n");
+                kirjutaja.flush();
+            }
+
+        } catch (Exception e) {
+            System.out.println("viga");
+            System.exit(1);
+        }
+    }
 }

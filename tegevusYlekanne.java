@@ -107,4 +107,51 @@ public class tegevusYlekanne {
             }
         }
     }
+
+    public static void kannayle2(Rahakott kandjaRahakott, Rahakott saajaRahakott, double summa) {
+        File logid = new File("logid.txt");
+
+        try (FileWriter kirjutaja = new FileWriter(logid, true)) {
+            if (kandjaRahakott.getValuutaNimi().equals(saajaRahakott.getValuutaNimi())) {
+                double saajaVanasumma = saajaRahakott.getValuutaKogus();
+                saajaRahakott.setValuutaKogus(saajaVanasumma + summa);
+                double kandjaVanasumma = kandjaRahakott.getValuutaKogus();
+                kandjaRahakott.setValuutaKogus(kandjaVanasumma - summa);
+
+                Date date = new Date();
+                long time = date.getTime();
+                Timestamp ts = new Timestamp(time);
+
+                kandjaRahakott.setValuutaKogus(kandjaVanasumma - summa);
+                kirjutaja.write(ts + " " + kandjaRahakott.getKood() + " " + kandjaRahakott.getValuutaNimi() + " " + kandjaVanasumma + " -" + summa + " " + (kandjaVanasumma - summa) + " " +
+                        saajaRahakott.getKood() + " " + saajaRahakott.getValuutaNimi() + " " + saajaVanasumma + " +" + summa + " " + (saajaVanasumma + summa) + "\r\n");
+                kirjutaja.flush();
+            } else {
+                double kandjaVanasumma = kandjaRahakott.getValuutaKogus();
+                double saajaVanasumma = saajaRahakott.getValuutaKogus();
+
+                double kantavSummaEur = Valuuta.valuuta2Eur(kandjaRahakott.getValuutaNimi(), summa);
+                double kandjaVanaSummaEur = Valuuta.valuuta2Eur(kandjaRahakott.getValuutaNimi(), kandjaVanasumma);
+                double saajaKontoSummaEur = Valuuta.valuuta2Eur(saajaRahakott.getValuutaNimi(), saajaVanasumma);
+                saajaRahakott.setValuutaKogus(Valuuta.eur2Valuuta(saajaRahakott.getValuutaNimi(), kantavSummaEur + saajaKontoSummaEur));
+                kandjaRahakott.setValuutaKogus(Valuuta.eur2Valuuta(kandjaRahakott.getValuutaNimi(), kandjaVanaSummaEur - kantavSummaEur));
+
+                Date date = new Date();
+                long time = date.getTime();
+                Timestamp ts = new Timestamp(time);
+
+                kirjutaja.write(ts + " " + kandjaRahakott.getKood() + " " + kandjaRahakott.getValuutaNimi() + " " + kandjaVanasumma + " -" + summa + " " + (kandjaVanasumma - summa) + " " +
+                        saajaRahakott.getKood() + " " + saajaRahakott.getValuutaNimi() + " " + saajaVanasumma + " +" + summa + " " + (saajaVanasumma + summa) + "\r\n");
+
+                kirjutaja.flush();
+                kirjutaja.close();
+            }
+        } catch (Exception e) {
+            System.out.println("viga");
+            System.exit(1);
+        }
+
+
+
+    }
 }

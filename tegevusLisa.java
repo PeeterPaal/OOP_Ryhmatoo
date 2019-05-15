@@ -47,4 +47,20 @@ public class tegevusLisa {
         kirjutaja.close();
 
     }
+
+    public static void lisa2(List<Rahakott> rahakotid, String tunnusNumber, String omanikuNimi, String oigeValuutaNimi, String valuutaKogus) {
+        try (FileWriter kirjutaja = new FileWriter("rahakotid.txt")) {
+            FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
+            String kood = KoodiGeneraator.generaator(); //genereeritakse uuele rahakotile kood, kasutatakse meetodit "generaator"
+
+            //lisatud rahakott kirjutatakse faili ning lisatakse listi, seejärel list sorditakse
+            kirjutaja.write(tunnusNumber + " " + omanikuNimi.substring(0, 1).toUpperCase() + omanikuNimi.substring(1) + " " + oigeValuutaNimi.toUpperCase() + " " + valuutaKogus + " " + kood);
+            rahakotid.add(new Rahakott(Integer.parseInt(tunnusNumber), omanikuNimi, oigeValuutaNimi, Double.parseDouble(valuutaKogus), kood));
+            Collections.sort(rahakotid);
+            kirjutaja.flush();
+        } catch (Exception e) {
+            System.out.println("error");
+            System.exit(1);
+        }
+    }
 }

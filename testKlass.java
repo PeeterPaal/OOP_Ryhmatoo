@@ -17,7 +17,7 @@ public class testKlass {
         failistListi.failistList(andmebaas, rahakotid);
 
         //programm töötab nii kaua, kuniks sisestatakse "peata"
-        while (true) {
+        /*while (true) {
             //küsitakse valikut
             System.out.print("Lisa / näita / kustuta / peata / teisenda / ülekanne: ");
             //et programm saaks aru, kui kirjutatakse "peata" või "PeaTa", siis teisendatakse saadud sõne väikesteks tähtedeks
@@ -44,7 +44,7 @@ public class testKlass {
                 System.exit(0);
                 break;
             }
-        }
+        }*/
     }
 }
 
