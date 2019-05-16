@@ -1,4 +1,4 @@
-# OOP_Ryhmatoo
+# OOP_Ryhmätyö
 Plaan:
 * Programm, mis oleks võimeline:
 - lugema .txt failist erinevaid rahakotte (ridade kaupa);
