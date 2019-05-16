@@ -12,15 +12,27 @@ public class Valuuta {
     static double ETH = 140.59;
 
     //meetod valuuta2Eur vajab valuuta nime ning valuuta kogust
-    public static String valuuta2Eur(String valuutaNimi, double valuutaKogus) {
+    public static double valuuta2Eur(String valuutaNimi, double valuutaKogus) {
         double summa = 0;   //väärtustatakse muutuja summa
         if (valuutaNimi.equals("BTC")) {    //uuritakse, mis valuutaga on tegemist ning vastavalt valuuta nimele teisendatakse valuuta eurodesse
-            summa = valuutaKogus * BTC;
+            summa = Math.round(valuutaKogus * BTC * 1000.0) /1000.0;
         }
         else if (valuutaNimi.equals("ETH")) {
-            summa = valuutaKogus * ETH;
+            summa = Math.round(valuutaKogus * ETH * 1000.0) /1000.0;
+        }
+        return summa;   //tagastatakse valuuta väärtus eurodes
+    }
+
+    public static double eur2Valuuta(String valuutaNimi, double valuutaKogus) {
+        double summa = 0;
+        if (valuutaNimi.equals("BTC")) {
+            summa = Math.round(valuutaKogus / BTC * 1000.0) / 1000.0;
         }
 
-        return valuutaKogus + " " + valuutaNimi + " = " + summa + " EUR";   //tagastatakse valuuta väärtus eurodes
+        else if (valuutaNimi.equals("ETH")) {
+            summa = Math.round(valuutaKogus / ETH * 1000.0) / 1000.0;
+        }
+
+        return summa;
     }
 }

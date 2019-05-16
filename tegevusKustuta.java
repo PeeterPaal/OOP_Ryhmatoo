@@ -54,4 +54,15 @@ public class tegevusKustuta {
         FileWriter kirjutaja = new FileWriter(andmebaas);
         FailiKirjutaja.kirjutaja(rahakotid, kirjutaja);
     }
+
+    public static void kustuta2(List<Rahakott> rahakotid, String valik) {
+        for (Rahakott rahakott : rahakotid) {
+            if (Integer.toString(rahakott.getTunnusNumber()).equals(valik)) {
+                rahakotid.remove(rahakott);
+                break;
+            }
+        }
+        Collections.sort(rahakotid);
+        FailiKirjutaja.kirjutaja2(rahakotid);
+    }
 }
